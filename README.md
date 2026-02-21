@@ -1,4 +1,4 @@
-﻿# Quality Process Job Recommender
+# Quality Process Job Recommender
 
 매일 08:00 KST에 품질/공정 관련 공고를 수집하고, 경력기술서 기반 프로필과의 적합도를 계산해 추천합니다.
 
@@ -8,6 +8,8 @@
 - `saramin`
 - `linkedin`
 - `remoteok` (글로벌 보조 소스)
+- `remotive` (공개 API)
+- `arbeitnow` (공개 API)
 
 각 소스는 페이지 구조 변경/차단 가능성이 있어 실패 시 자동으로 skip되고 전체 파이프라인은 계속 진행됩니다.
 
@@ -24,19 +26,15 @@
 - `output/latest.md`
 - 실행 시각별 `output/recommendations_*.json|md`
 
-## 이메일 알림 (GitHub Secrets)
+## 이메일 알림 (Resend + GitHub Secrets)
 아래 Secrets를 저장소에 설정하세요.
-- `SMTP_HOST`
-- `SMTP_PORT`
-- `SMTP_USER`
-- `SMTP_PASSWORD`
-- `SMTP_FROM`
-- `SMTP_TO` (콤마로 다중 수신자)
+- `RESEND_API_KEY`
+- `RESEND_FROM`
+- `RESEND_TO` (콤마로 다중 수신자)
 
-예시(Gmail):
-- host: `smtp.gmail.com`
-- port: `587`
-- password: 앱 비밀번호
+예시:
+- `RESEND_FROM`: `onboarding@resend.dev` (테스트)
+- `RESEND_TO`: `tkfkdlwhgdk@gmail.com`
 
 ## GitHub Actions
 - `.github/workflows/daily.yml`

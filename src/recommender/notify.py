@@ -1,27 +1,40 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import os
-import smtplib
-from email.mime.text import MIMEText
+import requests
 
 
 def send_email(subject: str, body: str) -> None:
-    host = os.getenv("SMTP_HOST")
-    port = int(os.getenv("SMTP_PORT", "587"))
-    user = os.getenv("SMTP_USER")
-    password = os.getenv("SMTP_PASSWORD")
-    from_addr = os.getenv("SMTP_FROM", user or "")
-    to_addr = os.getenv("SMTP_TO", "")
+    api_key = os.getenv("RESEND_API_KEY", "").strip()
+    from_addr = os.getenv("RESEND_FROM", "").strip()
+    to_addr = os.getenv("RESEND_TO", "").strip()
 
-    if not host or not user or not password or not to_addr:
+    if not api_key or not from_addr or not to_addr:
         return
 
-    msg = MIMEText(body, "plain", "utf-8")
-    msg["Subject"] = subject
-    msg["From"] = from_addr
-    msg["To"] = to_addr
+    recipients = [x.strip() for x in to_addr.split(",") if x.strip()]
+    if not recipients:
+        return
 
-    with smtplib.SMTP(host, port, timeout=30) as server:
-        server.starttls()
-        server.login(user, password)
-        server.sendmail(from_addr, [x.strip() for x in to_addr.split(",") if x.strip()], msg.as_string())
+    payload = {
+        "from": from_addr,
+        "to": recipients,
+        "subject": subject,
+        "text": body,
+    }
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json",
+    }
+
+    try:
+        response = requests.post(
+            "https://api.resend.com/emails",
+            headers=headers,
+            json=payload,
+            timeout=30,
+        )
+        response.raise_for_status()
+    except Exception:
+        # Notification failure should not break the recommendation pipeline.
+        return

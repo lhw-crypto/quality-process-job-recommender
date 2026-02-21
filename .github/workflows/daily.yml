@@ -1,4 +1,4 @@
-﻿name: Daily Job Recommender
+name: Daily Job Recommender
 
 on:
   schedule:
@@ -25,12 +25,9 @@ jobs:
 
       - name: Run pipeline
         env:
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          SMTP_FROM: ${{ secrets.SMTP_FROM }}
-          SMTP_TO: ${{ secrets.SMTP_TO }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM: ${{ secrets.RESEND_FROM }}
+          RESEND_TO: ${{ secrets.RESEND_TO }}
         run: python scripts/run_daily.py
 
       - name: Commit results
