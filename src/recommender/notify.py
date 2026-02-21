@@ -4,7 +4,7 @@ import os
 import requests
 
 
-def send_email(subject: str, body: str) -> None:
+def send_email(subject: str, text_body: str, html_body: str | None = None) -> None:
     api_key = os.getenv("RESEND_API_KEY", "").strip()
     from_addr = os.getenv("RESEND_FROM", "").strip()
     to_addr = os.getenv("RESEND_TO", "").strip()
@@ -20,8 +20,10 @@ def send_email(subject: str, body: str) -> None:
         "from": from_addr,
         "to": recipients,
         "subject": subject,
-        "text": body,
+        "text": text_body,
     }
+    if html_body:
+        payload["html"] = html_body
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
