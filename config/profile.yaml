@@ -1,0 +1,76 @@
+﻿profile:
+  target_title: "품질/공정 데이터 기반 직무"
+  years_experience: 2.5
+  include_entry_level: true
+  role_keywords:
+    - 품질
+    - 품질관리
+    - 품질보증
+    - QA
+    - QC
+    - 공정
+    - 공정기술
+    - 생산기술
+    - 공정개선
+    - 품질혁신
+    - 데이터분석
+    - 제조데이터
+    - 통계
+    - SPC
+    - MSA
+    - Gage R&R
+    - Cpk
+    - Minitab
+    - 8D
+    - FMEA
+    - PPAP
+    - Audit
+    - 클레임
+  industry_keywords:
+    - 배터리
+    - 2차전지
+    - 알루미늄
+    - Foil
+    - 코팅
+    - 압연
+    - 제조
+    - 화학
+    - 소재
+    - 자동차
+    - 반도체
+  skill_keywords:
+    - Python
+    - Excel VBA
+    - OpenCV
+    - Minitab
+    - DOE
+    - ANOVA
+    - t-test
+    - 데이터 시각화
+    - 자동화
+    - 품질시스템
+    - IATF
+    - VDA
+  seniority_keywords:
+    - 경력
+    - Junior
+    - Mid
+    - Associate
+    - 신입
+sources:
+  keyword_queries:
+    - 품질 공정
+    - 품질관리
+    - 품질보증
+    - 공정기술
+    - 생산기술 품질
+    - QA QC
+    - quality engineer process
+  per_source_limit: 80
+scoring:
+  role_weight: 0.45
+  industry_weight: 0.20
+  skill_weight: 0.20
+  seniority_weight: 0.15
+  preferred_threshold: 45
+
