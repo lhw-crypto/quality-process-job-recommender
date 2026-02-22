@@ -10,6 +10,31 @@ from .sources import collect_jobs
 from .scoring import score_jobs
 from .notify import send_email
 
+STATE_PATH = Path("data/sent_jobs.json")
+FOUR_YEAR_REQUIRED_MARKERS = [
+    "4년제",
+    "대졸",
+    "학사",
+    "대학교 졸업",
+    "bachelor",
+    "bachelors",
+    "bachelor's",
+    "bs ",
+    "b.s",
+    "ba ",
+    "master",
+    "석사",
+    "박사",
+]
+EXCLUDED_EDU_MARKERS = [
+    "2년제",
+    "3년제",
+    "전문대",
+    "초대졸",
+    "고졸",
+    "학력무관",
+]
+
 
 def _to_dict(item):
     return {
@@ -25,9 +50,47 @@ def _to_dict(item):
     }
 
 
+def _load_sent_urls() -> set[str]:
+    if not STATE_PATH.exists():
+        return set()
+    try:
+        data = json.loads(STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return set()
+    urls = data.get("sent_urls", [])
+    return {u for u in urls if isinstance(u, str) and u.strip()}
+
+
+def _save_sent_urls(urls: set[str]) -> None:
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "updated_at_utc": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "sent_urls": sorted(urls),
+    }
+    STATE_PATH.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+
+def _is_four_year_plus_job(posting) -> bool:
+    text = " ".join(
+        [
+            posting.title or "",
+            posting.snippet or "",
+            posting.url or "",
+        ]
+    ).lower()
+    if any(marker in text for marker in EXCLUDED_EDU_MARKERS):
+        return False
+    return any(marker in text for marker in FOUR_YEAR_REQUIRED_MARKERS)
+
+
 def _build_text_email(
     timestamp: str,
     collected: int,
+    edu_filtered: int,
+    dedup_filtered: int,
     recommended_over_threshold: int,
     used_fallback: bool,
     selected,
@@ -36,6 +99,8 @@ def _build_text_email(
         f"Daily Quality/Process Job Recommendations ({timestamp} UTC)",
         "",
         f"Collected: {collected}",
+        f"After 4-year filter: {edu_filtered}",
+        f"After dedup filter: {dedup_filtered}",
         f"Recommended (score threshold): {recommended_over_threshold}",
         f"Fallback Used: {used_fallback}",
         "",
@@ -59,6 +124,8 @@ def _build_text_email(
 def _build_html_email(
     timestamp: str,
     collected: int,
+    edu_filtered: int,
+    dedup_filtered: int,
     recommended_over_threshold: int,
     used_fallback: bool,
     selected,
@@ -107,6 +174,8 @@ def _build_html_email(
                       <tr>
                         <td style="padding:12px 14px;font-size:13px;color:#243b53;">
                           <strong>Collected:</strong> {collected} &nbsp;|&nbsp;
+                          <strong>4-year filtered:</strong> {edu_filtered} &nbsp;|&nbsp;
+                          <strong>Dedup filtered:</strong> {dedup_filtered} &nbsp;|&nbsp;
                           <strong>Recommended:</strong> {len(selected)} &nbsp;|&nbsp;
                           <strong>Threshold Hits:</strong> {recommended_over_threshold} &nbsp;|&nbsp;
                           <strong>Fallback:</strong> {used_fallback}
@@ -137,15 +206,18 @@ def run(limit: int = 20) -> None:
     per_source_limit = int(profile["sources"].get("per_source_limit", 80))
 
     jobs = collect_jobs(queries, per_source_limit)
-    ranked = score_jobs(jobs, profile)
+    edu_filtered_jobs = [x for x in jobs if _is_four_year_plus_job(x)]
+    ranked = score_jobs(edu_filtered_jobs, profile)
+    sent_urls = _load_sent_urls()
+    ranked_unsent = [x for x in ranked if x.posting.url not in sent_urls]
 
     threshold = float(profile["scoring"].get("preferred_threshold", 45))
-    selected = [x for x in ranked if x.score >= threshold][:limit]
+    selected = [x for x in ranked_unsent if x.score >= threshold][:limit]
 
     # If strict threshold returns nothing, keep top-N candidates for daily review.
     used_fallback = False
     if not selected:
-        selected = ranked[:limit]
+        selected = ranked_unsent[:limit]
         used_fallback = True
 
     output_dir = Path("output")
@@ -160,6 +232,8 @@ def run(limit: int = 20) -> None:
     payload = {
         "generated_at_utc": timestamp,
         "total_collected": len(jobs),
+        "after_education_filter": len(edu_filtered_jobs),
+        "after_dedup_filter": len(ranked_unsent),
         "total_recommended": len(selected),
         "used_fallback_top_n": used_fallback,
         "items": [_to_dict(x) for x in selected],
@@ -173,7 +247,9 @@ def run(limit: int = 20) -> None:
         f"# Daily Quality/Process Job Recommendations ({timestamp} UTC)",
         "",
         f"- Collected: {len(jobs)}",
-        f"- Recommended (score >= {threshold}): {len([x for x in ranked if x.score >= threshold])}",
+        f"- 4-year filter passed: {len(edu_filtered_jobs)}",
+        f"- Not sent before: {len(ranked_unsent)}",
+        f"- Recommended (score >= {threshold}): {len([x for x in ranked_unsent if x.score >= threshold])}",
         f"- Fallback Used: {used_fallback}",
         "",
     ]
@@ -193,11 +269,13 @@ def run(limit: int = 20) -> None:
     md_path.write_text(md_text, encoding="utf-8")
     latest_md_path.write_text(md_text, encoding="utf-8")
 
-    recommended_over_threshold = len([x for x in ranked if x.score >= threshold])
+    recommended_over_threshold = len([x for x in ranked_unsent if x.score >= threshold])
     email_subject = f"[Daily Job Match] 추천 {len(selected)}건 / 수집 {len(jobs)}건"
     text_body = _build_text_email(
         timestamp=timestamp,
         collected=len(jobs),
+        edu_filtered=len(edu_filtered_jobs),
+        dedup_filtered=len(ranked_unsent),
         recommended_over_threshold=recommended_over_threshold,
         used_fallback=used_fallback,
         selected=selected,
@@ -205,8 +283,13 @@ def run(limit: int = 20) -> None:
     html_body = _build_html_email(
         timestamp=timestamp,
         collected=len(jobs),
+        edu_filtered=len(edu_filtered_jobs),
+        dedup_filtered=len(ranked_unsent),
         recommended_over_threshold=recommended_over_threshold,
         used_fallback=used_fallback,
         selected=selected,
     )
-    send_email(email_subject, text_body, html_body)
+    sent_ok = send_email(email_subject, text_body, html_body)
+    if sent_ok and selected:
+        sent_urls.update([x.posting.url for x in selected if x.posting.url])
+        _save_sent_urls(sent_urls)
