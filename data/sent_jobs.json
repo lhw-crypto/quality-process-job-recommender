@@ -1,5 +1,5 @@
 {
-  "updated_at_utc": "2026-04-01T23:32:09Z",
+  "updated_at_utc": "2026-04-02T23:30:38Z",
   "sent_urls": [
     "https://remoteok.com/remote-engineer-jobs",
     "https://remoteok.com/remote-engineering-jobs",
@@ -13,9 +13,12 @@
     "https://www.arbeitnow.com/jobs/companies/distribusion-technologies-gmbh/senior-it-support-engineer-all-genders-berlin-424955",
     "https://www.arbeitnow.com/jobs/companies/ig-pharma-ingenieurgesellschaft-fur-pharmatechnik-mbh/ingenieur-in-bsc-msc-versorgungstechnik-gebaudetechnik-hkls-gau-algesheim-100878",
     "https://www.arbeitnow.com/jobs/companies/ingestro/senior-frontend-engineer-gn-berlin-254562",
+    "https://www.arbeitnow.com/jobs/companies/nomitri/machine-learning-engineer-for-edge-ai-at-fast-growing-berlin-ai-company-204780",
+    "https://www.arbeitnow.com/jobs/companies/nomitri/senior-devops-mlops-at-fast-growing-berlin-ai-company-393171",
     "https://www.arbeitnow.com/jobs/companies/novanta-europe-gmbh/masterand-engineering-wackersdorf-48150",
     "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-integration-engineer-n3xt-interceptor-cuas-gilching-250344",
     "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-mechanical-engineer-n3xt-interceptor-cuas-gilching-395500",
+    "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-pcb-layout-designer-gilching-253490",
     "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-systems-engineer-n3xt-interceptor-cuas-gilching-270655",
     "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-vv-engineer-n3xt-interceptor-cuas-gilching-39035",
     "https://www.arbeitnow.com/jobs/companies/simplifier-ag/werkstudentin-bachelor-oder-masterarbeit-business-development-mwd-remote-wurzburg-238040",
@@ -37,6 +40,7 @@
     "https://www.jobkorea.co.kr/Recruit/GI_Read/48770322?Oem_Code=C1&logpath=1&stext=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&listno=4&sc=630",
     "https://www.jobkorea.co.kr/Recruit/GI_Read/48770322?Oem_Code=C1&logpath=1&stext=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&listno=5&sc=630",
     "https://www.jobkorea.co.kr/Recruit/GI_Read/48849930?Oem_Code=C1&logpath=1&stext=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&listno=11&sc=630",
+    "https://www.jobkorea.co.kr/Recruit/GI_Read/48849930?Oem_Code=C1&logpath=1&stext=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&listno=12&sc=630",
     "https://www.jobkorea.co.kr/Recruit/GI_Read/48849930?Oem_Code=C1&logpath=1&stext=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&listno=13&sc=630",
     "https://www.jobkorea.co.kr/Recruit/GI_Read/48849930?Oem_Code=C1&logpath=1&stext=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&listno=3&sc=630",
     "https://www.jobkorea.co.kr/Recruit/GI_Read/48849930?Oem_Code=C1&logpath=1&stext=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&listno=4&sc=630",
@@ -149,12 +153,15 @@
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53342251&location=ts&searchword=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&searchType=search&paid_fl=n&search_uuid=ca975fb5-1675-43f5-84f4-3ed9bc2cdfc5",
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53342251&location=ts&searchword=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&searchType=search&paid_fl=n&search_uuid=d4bddded-a7b5-4d35-9e86-b07883c9a40e",
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53342251&location=ts&searchword=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&searchType=search&paid_fl=n&search_uuid=e227963c-69d3-479d-a352-7c0fe7537e6c",
+    "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53342251&location=ts&searchword=%EA%B3%B5%EC%A0%95%EA%B8%B0%EC%88%A0&searchType=search&paid_fl=n&search_uuid=e257b9c0-09a6-4b96-93a9-c5283c383d76",
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53383177&location=ts&searchword=%ED%92%88%EC%A7%88%EB%B3%B4%EC%A6%9D&searchType=search&paid_fl=n&search_uuid=476c23d0-b7f8-471d-b112-71aec6e5df9c",
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53383177&location=ts&searchword=%ED%92%88%EC%A7%88%EB%B3%B4%EC%A6%9D&searchType=search&paid_fl=n&search_uuid=dced336e-6a8f-469d-ae98-8d1180fe6b08",
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53473171&location=ts&searchword=%ED%92%88%EC%A7%88%EB%B3%B4%EC%A6%9D&searchType=search&paid_fl=n&search_uuid=11791a75-f5a4-49c7-8b99-60947234a804",
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53473171&location=ts&searchword=%ED%92%88%EC%A7%88%EB%B3%B4%EC%A6%9D&searchType=search&paid_fl=n&search_uuid=18147752-f38e-4b8f-b1ea-6379a51234a1",
+    "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53473171&location=ts&searchword=%ED%92%88%EC%A7%88%EB%B3%B4%EC%A6%9D&searchType=search&paid_fl=n&search_uuid=36b15a94-ff7f-4e48-bc63-21e11e53d358",
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53473171&location=ts&searchword=%ED%92%88%EC%A7%88%EB%B3%B4%EC%A6%9D&searchType=search&paid_fl=n&search_uuid=cdb8bf83-63d6-44e3-9b6a-ac7b68dae357",
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53487991&location=ts&searchword=%ED%92%88%EC%A7%88%EB%B3%B4%EC%A6%9D&searchType=search&paid_fl=n&search_uuid=11791a75-f5a4-49c7-8b99-60947234a804",
+    "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53487991&location=ts&searchword=%ED%92%88%EC%A7%88%EB%B3%B4%EC%A6%9D&searchType=search&paid_fl=n&search_uuid=36b15a94-ff7f-4e48-bc63-21e11e53d358",
     "https://www.saramin.co.kr/zf_user/jobs/relay/view?view_type=search&rec_idx=53487991&location=ts&searchword=%ED%92%88%EC%A7%88%EB%B3%B4%EC%A6%9D&searchType=search&paid_fl=n&search_uuid=cdb8bf83-63d6-44e3-9b6a-ac7b68dae357"
   ]
 }
