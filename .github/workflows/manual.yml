@@ -22,10 +22,6 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run pipeline
-        env:
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          RESEND_FROM: ${{ secrets.RESEND_FROM }}
-          RESEND_TO: ${{ secrets.RESEND_TO }}
         run: python scripts/run_daily.py --limit 15
 
       - name: Upload outputs
